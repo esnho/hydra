@@ -1,0 +1,387 @@
+// document.body.requestFullscreen()
+// document.getElementById("modal-header").style.opacity = 1
+
+a.onBeat = () => {console.log("BEAT!", Math.random())}
+
+sin = ({time})=>Math.sin(time)
+d180 = Math.PI
+halfsec = ({time})=>Math.sin(time*1)>0
+
+//s3.initCam()
+// s2.initScreen()
+
+// imagine.src = images.next()
+
+
+hostURL = "http://localhost:8080/"
+
+// FILE RETRIEVERS FILE RETREIVERS FILE RETREIVERS FILE RETREIVERS
+setupRetriever = (r) => {
+  for (i = 0; i < r.total; i++) {
+    nextName = hostURL + r.folder + i + r.extension
+    console.log(nextName)
+    r.names.push(nextName)
+  }
+  r.next = () => {
+    r.current = (r.current + 1) % r.names.length
+    return r.names[r.current]
+  }
+  r.random = () => {
+    r.current = (Math.ceil(Math.random() * r.names.length)) % r.names.length
+    return r.names[r.current]
+  }
+  r.filename = () => {
+    return r.names[r.current]
+  }
+}
+images = {
+  total: 44,
+  folder: "imgs/target/",
+  extension: ".jpg",
+  current: 0,
+  names: []
+}
+setupRetriever(images)
+
+videos = {
+  total: 24,
+  folder: "videos/target/",
+  extension: ".mp4",
+  current: 0,
+  names: []
+}
+setupRetriever(videos)
+
+// eo FILE RETREIVERS eo FILE RETREIVERS eo FILE RETREIVERS
+
+
+// MEDIA READERS MEDIA READERS MEDIA READERS MEDIA READERS
+imagine = new Image()
+imagine.onload = () => s1.init({src:imagine, dynamic:false})
+imagine.crossOrigin = "anonymous"
+imagine.src = "https://i.imgur.com/yfswUY1.jpg"
+imagine.src = "http://localhost:8080/meme.jpeg"
+
+video = document.createElement("video")
+video.autoplay = true
+video.loop = true
+video.crossOrigin = "anonymous"
+video.muted = true
+video.src = videos.filename()
+// videoObj.src = "https://i.imgur.com/3C088RY.mp4"
+video.play().then(()=>s0.init({src:video, dynamic:true}))
+
+// eo MEDIA READERS eo MEDIA READERS eo MEDIA READERS eo MEDIA READERS
+
+
+// src(s0)
+// .layer(src(o1).scale(1.05).rotate(()=>Math.sin(time)).luma(0.9),0.9)
+// .out(o1)
+
+// render(o1)
+
+// imagine.src = images.next()
+
+// video.src = videos.random()
+
+// video.src = videos.next()
+// video.play().then(()=>s0.init({src:video, dynamic:true}))
+
+/////////////////////////////////////////
+// >>>>>>>>>>>>>>>> rotating video on meme
+// a.onBeat = () => {
+//   if (Math.random() > 0.5) {
+//   	imagine.src = images.next()
+//   } else {      
+//     video.src = videos.next()
+//     video.play().then(()=>s0.init({src:video, dynamic:true}))
+//   }
+// }
+src(s0)
+// .invert(()=>time%3>1?1:0)
+.rotate(({time})=>time*0.1)
+// .modulateScale(osc(10, 0.8)
+// //   .thresh(0.5)
+// //   .scale(10,1)
+// //   .rotate(({time})=>Math.sin(time))
+// )
+// .mult(src(s1)
+// //   .invert(()=>time%2)
+// )
+// .out(o0)
+
+
+
+
+
+
+
+/////////////////////////////////////////
+// >>>>>>>>>>>>>>>> dynamic chess
+osc()
+  .rotate()
+  .scale(sin)
+  .pixelate()
+.blend(src(s0))
+//.out(o0)
+
+
+
+
+
+
+/////////////////////////////////////////
+// >>>>>>>>>>>>>>>> mad pentagram
+shape(5,0.01,1)
+  	.rotate(d180)
+ .invert(({time})=>Math.sin(time*0.1)*2)
+	.repeat(2,1)
+// 	.thresh(0.5)
+	.posterize(3.3, -0.1)
+// 	.invert(halfsec)
+// .rotate(()=>time*9)
+// .mask(src(o0).scale(0.8))
+// .modulateScale(src(o0))
+// 	.pixelate()
+// 	.out(o0)
+
+
+
+
+
+
+
+
+/////////////////////////////////////////
+// >>>>>>>>>>>>>>>> eye of repetition
+k=0
+increaseRatio=0.005
+maxK=0.9
+sides=4
+rotationRate=0.2
+// a.onBeat=() => {
+//   k=0
+//   sides=Math.random()*100
+//   rotationRate=Math.random()*2
+//   increaseRatio=(Math.random()*0.1)+0.005
+// }
+growingShape=shape(sides,()=>k=Math.min(k+increaseRatio,maxK),0)
+staticShape=shape(sides,0.9,0)
+staticShape
+  .add(src(o3)
+    .scale(0.9)
+//     .rotate(()=>time*rotationRate)
+//   	.scrollX(0.1)
+//   	.scrollY(0.1)
+  ,-0.99)
+// .rotate(()=>time*0.5)
+// .scale([0.8,0.6,1.05])
+// .out(o3)
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////
+// >>>>>>>>>>>>>>>> kaleidogreen
+osc([20,10,6],[0.9,0.5,2].fast(0.8),[0.6,0.9,9].fast(10))
+.rotate(()=>time*0.2)
+// .modulateScrollX(src(o1),1)
+.modulateScale(src(o1),()=>Math.sin(time*0)*0.4)
+.mult(
+  src(o1)
+  .scale([0.5,1,0.1])
+  .brightness(0.6)
+  .kaleid([4,2,3,8,16,32].fast(10))
+)
+// .out(o1)
+
+
+
+
+
+
+
+/////////////////////////////////////////
+// >>>>>>>>>>>>>>>> another bad screen FX
+// s1.initScreen()
+// s0.initCam()
+
+src(s1)
+// // .scale(1.1)
+// // .modulateRepeat(osc(2,1,2)
+// // //                 .kaleid(90)
+// // //                 .pixelate(3,3)
+// // //                 .posterize(3)
+// //                 ,1,1,2,2)
+// // .color(0.8,0,()=>Math.sin(time))
+// // .mult(
+// //   src(s0)
+// // //   .invert()
+// // //   .mult(src(s0)
+// // // //         .mo¶dulateScale(src(s0))
+// // //        ,-1)
+// //    ,-0.9)
+// // .invert(()=>time%4>3)
+// .out(o2)
+
+
+
+
+
+
+
+
+/////////////////////////////////////////
+// >>>>>>>>>>>>>>>> krasykum
+// s3.initCam()
+// s2.initScreen()
+src(s3)
+// .modulatePixelate(o3)
+// .rotate(()=>time)
+// .modulateRepeat(o3,0,1)
+// .diff(src(s2))
+// .brightness(0.4)
+// .diff(src(s2))
+// .modulateRepeat(osc(0.5,1),1,1)
+// .blend(src(s3))
+// .out(o2)
+
+
+solid(0,1,1).out(o0)
+solid(1,0,0).out(o1)
+solid(1,1,0).out(o2)
+solid(1,0,1).out(o3)
+
+
+
+// MIDI
+function onMIDISuccess(midiAccess) {
+    console.log(midiAccess);
+    var inputs = midiAccess.inputs;
+    var outputs = midiAccess.outputs;
+    for (var input of midiAccess.inputs.values()){
+        input.onmidimessage = getMIDIMessage;
+    }
+}
+//
+function onMIDIFailure() {
+    console.log('Could not access your MIDI devices.');
+}
+//
+//create an array to hold our cc values and init to a normalized value
+if (typeof cc == 'undefined') cc=Array(128).fill(0.5)
+if (typeof ccvals == 'undefined' || true) {
+  ccvals=Array()
+  //
+  for(let i = 0;i < 128; i++) {
+    ccvals.push({
+    aInternal: 10,
+    aListener: function(val) {},
+    set a(val) {
+      this.aInternal = val;
+      this.aListener(val);
+    },
+    get a() {
+      return this.aInternal;
+    },
+    register: function(listener) {
+      this.aListener = listener;
+    }
+  })
+  }
+}
+// register R buttons to render outputs
+ccvals[64].register(()=>render(o0))
+ccvals[65].register(()=>render(o1))
+ccvals[66].register(()=>render(o2))
+ccvals[67].register(()=>render(o3))
+ccvals[68].register(()=>render())
+//
+ccvals[44].register((v)=>{
+  console.log(">>>>>>>>>",v)
+  if (v<0.5) {
+    video.src = videos.next()
+  	video.play().then(()=>s0.init({src:video, dynamic:true}))
+  }
+})
+// 
+getMIDIMessage = function(midiMessage) {
+  var arr = midiMessage.data    
+  var index = arr[1]
+  console.log('Midi received on cc#' + index + ' value:' + arr[2])    // uncomment to monitor incoming Midi
+  var val = (arr[2]+1)/128.0  // normalize CC values to 0.0 - 1.0
+  cc[index]=val
+  ccvals[index].a=val
+}
+// register WebMIDI
+navigator.requestMIDIAccess()
+    .then(onMIDISuccess, onMIDIFailure);
+console.log(cc[0])
+
+c0 = ()=>cc[0]
+m={}
+hm={}
+for (let i = 0; i < 8; i++) {
+  m["f"+i]=()=>cc[i]*cc[i]*0.1
+  m["u"+i]=()=>cc[i]*cc[i]
+  m["d"+i]=()=>cc[i]*10*cc[i]
+  m["c"+i]=()=>cc[i]*100*cc[i]
+  m["m"+i]=()=>cc[i]*1000*cc[i]
+  hm["f"+i]=()=>((cc[i]*cc[i]*2)-1)*0.1
+  hm["u"+i]=()=>(cc[i]*cc[i]*2)-1
+  hm["d"+i]=()=>(cc[i]*10*cc[i]*2)-10
+  hm["c"+i]=()=>(cc[i]*100*cc[i]*2)-100
+  hm["m"+i]=()=>(cc[i]*1000*cc[i]*2)-1000
+}
+osc(m.m0,m.u1,m.c2)
+.mult(
+  src(o0)
+  .rotate(()=>time)
+  .scale(m.d4)
+  ,hm.c3)
+//.out(o0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+render()
+
+
+
+
+
